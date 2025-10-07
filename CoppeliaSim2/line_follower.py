@@ -73,8 +73,8 @@ if __name__ == "__main__":
 
     # PID gains
     Kp = 0.004 
-    Ki = 0.0003 
-    Kd = 0.005
+    Ki = 0.00015 
+    Kd = 0.03
 
     #https://towardinfinity.medium.com/pid-for-line-follower-11deb3a1a643 
 
@@ -120,13 +120,13 @@ if __name__ == "__main__":
                 elif line_pos < 0:
                     last_line_side = -1
                 # Zona muerta
-                # if abs(error) < 0.05:
-                #     error = 0
+                if abs(error) < 0.005:
+                    error = 0
                 # Filtro suavizado
                 # error = 0.6 * error + 0.4 * last_error
                 integral += error
                 derivative = error - last_error
-                # derivative = max(-1.0, min(1.0, derivative))
+                derivative = max(-1.0, min(1.0, derivative))
                 correction = Kp * error + Ki * integral + Kd * derivative
                 correction = max(-0.4, min(0.4, correction))
                 # Velocidad adaptativa
